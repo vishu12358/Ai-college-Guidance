@@ -1,8 +1,23 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Input from "../../components/ui/Input";
 import Button from "../../components/ui/Button";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log({
+      email,
+      password,
+    });
+
+    alert("Login Successful!");
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-6">
       <div className="bg-white shadow-xl rounded-2xl w-full max-w-md p-8">
@@ -15,16 +30,22 @@ const Login = () => {
           Login to your CollegeAI account
         </p>
 
-        <form className="mt-8 space-y-5">
+        <form onSubmit={handleSubmit} className="mt-8 space-y-5">
 
           <Input
             label="Email Address"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             type="email"
             placeholder="Enter your email"
           />
 
           <Input
             label="Password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="Enter your password"
           />

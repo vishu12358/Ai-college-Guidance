@@ -10,7 +10,7 @@ import CollegeDetails from "../pages/CollegeDetails/CollegeDetails";
 import Compare from "../pages/Compare/Compare";
 import AIChat from "../pages/AIChat/AIChat";
 import NotFound from "../pages/NotFound/NotFound";
-
+import CompareColleges from "../pages/CompareColleges/CompareColleges";
 const AppRoutes = () => {
   return (
     <BrowserRouter>
@@ -25,6 +25,10 @@ const AppRoutes = () => {
         <Route path="/compare" element={<Compare />} />
         <Route path="/chat" element={<AIChat />} />
         <Route path="*" element={<NotFound />} />
+        <Route
+  path="/compare-colleges"
+  element={<CompareColleges />}
+/>
       </Routes>
     </BrowserRouter>
   );

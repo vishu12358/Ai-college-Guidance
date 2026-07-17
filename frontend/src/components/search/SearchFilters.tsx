@@ -1,79 +1,172 @@
-import Input from "../ui/Input";
-import Select from "../ui/Select";
+import type { Dispatch, SetStateAction } from "react";
+import type { College } from "../../data/colleges";
 
-import { branches } from "../../constants/branches";
-import { entranceExams } from "../../constants/entranceExams";
-import { categories } from "../../constants/categories";
-import { collegeTypes } from "../../constants/collegeTypes";
-import { states } from "../../constants/states";
+export interface Filters {
+  searchTerm: string;
+  state: string;
+  collegeType: string;
+  branch: string;
+  entranceExam: string;
+  sortBy: string;
+}
 
-const SearchFilters = () => {
+interface SearchFiltersProps {
+  filters: Filters;
+  setFilters: Dispatch<SetStateAction<Filters>>;
+  colleges: College[];
+}
+
+const SearchFilters = ({
+  filters,
+  setFilters,
+  colleges,
+}: SearchFiltersProps) => {
+  const states = [...new Set(colleges.map((college) => college.state))];
+  const branches = [...new Set(colleges.map((college) => college.branch))];
+  const exams = [...new Set(colleges.map((college) => college.entranceExam))];
+  const collegeTypes = [
+    ...new Set(colleges.map((college) => college.collegeType)),
+  ];
+
+  const resetFilters = () => {
+    setFilters({
+      searchTerm: "",
+      state: "",
+      collegeType: "",
+      branch: "",
+      entranceExam: "",
+      sortBy: "",
+    });
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-md p-6">
-
-      <h2 className="text-2xl font-bold mb-6">
+    <div className="bg-white rounded-xl shadow-md p-6 mb-8">
+      <h2 className="text-2xl font-semibold mb-6">
         Search Filters
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-        <Select
-          label="Entrance Exam"
-          name="entranceExam"
-          value=""
-          options={entranceExams}
-          onChange={() => {}}
+        {/* Search */}
+        <input
+          type="text"
+          placeholder="Search College..."
+          value={filters.searchTerm}
+          onChange={(e) =>
+            setFilters((prev) => ({
+              ...prev,
+              searchTerm: e.target.value,
+            }))
+          }
+          className="border rounded-lg p-3 w-full"
         />
 
-        <Select
-          label="Preferred Branch"
-          name="preferredBranch"
-          value=""
-          options={branches}
-          onChange={() => {}}
-        />
+        {/* State */}
+        <select
+          value={filters.state}
+          onChange={(e) =>
+            setFilters((prev) => ({
+              ...prev,
+              state: e.target.value,
+            }))
+          }
+          className="border rounded-lg p-3"
+        >
+          <option value="">All States</option>
 
-        <Select
-          label="State"
-          name="preferredState"
-          value=""
-          options={states}
-          onChange={() => {}}
-        />
+          {states.map((state) => (
+            <option key={state} value={state}>
+              {state}
+            </option>
+          ))}
+        </select>
 
-        <Select
-          label="Category"
-          name="category"
-          value=""
-          options={categories}
-          onChange={() => {}}
-        />
+        {/* College Type */}
+        <select
+          value={filters.collegeType}
+          onChange={(e) =>
+            setFilters((prev) => ({
+              ...prev,
+              collegeType: e.target.value,
+            }))
+          }
+          className="border rounded-lg p-3"
+        >
+          <option value="">College Type</option>
 
-        <Select
-          label="College Type"
-          name="collegeType"
-          value=""
-          options={collegeTypes}
-          onChange={() => {}}
-        />
+          {collegeTypes.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
 
-        <Input
-          label="Maximum Budget (₹)"
-          name="budget"
-          type="number"
-          value=""
-          onChange={() => {}}
-          placeholder="Enter Budget"
-        />
+        {/* Branch */}
+        <select
+          value={filters.branch}
+          onChange={(e) =>
+            setFilters((prev) => ({
+              ...prev,
+              branch: e.target.value,
+            }))
+          }
+          className="border rounded-lg p-3"
+        >
+          <option value="">Branch</option>
 
+          {branches.map((branch) => (
+            <option key={branch} value={branch}>
+              {branch}
+            </option>
+          ))}
+        </select>
+
+        {/* Entrance Exam */}
+        <select
+          value={filters.entranceExam}
+          onChange={(e) =>
+            setFilters((prev) => ({
+              ...prev,
+              entranceExam: e.target.value,
+            }))
+          }
+          className="border rounded-lg p-3"
+        >
+          <option value="">Entrance Exam</option>
+
+          {exams.map((exam) => (
+            <option key={exam} value={exam}>
+              {exam}
+            </option>
+          ))}
+        </select>
+
+        {/* Sort By */}
+        <select
+          value={filters.sortBy}
+          onChange={(e) =>
+            setFilters((prev) => ({
+              ...prev,
+              sortBy: e.target.value,
+            }))
+          }
+          className="border rounded-lg p-3"
+        >
+          <option value="">Sort By</option>
+          <option value="rank">NIRF Rank</option>
+          <option value="fees">Fees (Low → High)</option>
+          <option value="package">Package (High → Low)</option>
+          <option value="name">College Name (A-Z)</option>
+        </select>
+
+        {/* Reset Button */}
+        <button
+          onClick={resetFilters}
+          className="bg-red-500 text-white rounded-lg p-3 hover:bg-red-600 transition"
+        >
+          Reset Filters
+        </button>
       </div>
-
-      <button
-        className="mt-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition"
-      >
-        Search Colleges
-      </button>
-
     </div>
   );
 };

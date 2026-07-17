@@ -1,7 +1,21 @@
 import CollegeCard from "./CollegeCard";
-import { colleges } from "../../data/colleges";
+import type { College } from "../../data/colleges";
 
-const CollegeResults = () => {
+interface CollegeResultsProps {
+  colleges: College[];
+}
+
+const CollegeResults = ({ colleges }: CollegeResultsProps) => {
+  if (colleges.length === 0) {
+    return (
+      <div className="mt-10 text-center">
+        <h2 className="text-2xl font-semibold text-gray-500">
+          No colleges found.
+        </h2>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-8">
       <h2 className="text-3xl font-bold mb-6">
@@ -12,8 +26,12 @@ const CollegeResults = () => {
         {colleges.map((college) => (
           <CollegeCard
             key={college.id}
+            id={college.id}
             collegeName={college.collegeName}
             location={college.location}
+            state={college.state}
+            branch={college.branch}
+            entranceExam={college.entranceExam}
             nirfRank={college.nirfRank}
             fees={college.fees}
             averagePackage={college.averagePackage}

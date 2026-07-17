@@ -1,3 +1,5 @@
+
+
 const WelcomeCard = () => {
   return (
     <div className="bg-blue-600 text-white rounded-2xl p-8 shadow-lg">

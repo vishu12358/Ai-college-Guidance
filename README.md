@@ -1,39 +1,34 @@
-Phase 1 (1–2 weeks)
-•	User login 
-•	Student profile 
-•	College database 
-•	Search and filters 
-•	College detail pages 
+Phase 1 (Current UI)
+✅ Landing Page
+✅ Authentication UI
+✅ Dashboard
+✅ Student Profile
+✅ College Search
 
-Phase 2
-•	Recommendation engine 
-•	College comparison 
-•	Admission probability 
-•	Dream / Target / Safe categorization 
+Phase 2 
+🔄 Make filters actually work
+🔄 College Details page
+🔄 Compare Colleges
+🔄 Saved Colleges (Favorites)
+🔄 Settings page
+🔄 AI Assistant page
 
 Phase 3
-•	AI chatbot (using Ollama) 
-•	RAG over college data 
-•	Natural language queries 
-
+FastAPI backend
+MySQL database
+User authentication
+CRUD operations
+College APIs
 
 Phase 4
-•	Placement analytics 
-•	Fee and ROI calculator 
-•	Scholarship suggestions 
-•	Application deadline tracker 
-
+AI Recommendation Engine
+Ollama integration
+LangChain
+RAG
+Personalized recommendations
 
 Phase 5
-•	Deployment 
-•	Mobile-friendly UI 
-•	Admin panel to update college data 
-
-
-Tech stack
-•	Frontend: React + TypeScript + Tailwind CSS 
-•	Backend: FastAPI 
-•	Database: MySQL 
-•	Vector DB: ChromaDB 
-•	AI: Ollama + LangChain 
-•	Deployment: Vercel + Railway/Render
+Deployment
+Admin Panel
+Analytics
+Resume-ready polish

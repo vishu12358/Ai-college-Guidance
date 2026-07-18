@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import axios from "axios";
 
 import AppLayout from "../../components/layout/AppLayout";
 import ChatHeader from "../../components/AIChat/ChatHeader";
@@ -12,7 +13,6 @@ interface Message {
   message: string;
 }
 
-// ✅ Add this
 const initialMessage: Message = {
   sender: "ai",
   message:
@@ -20,9 +20,7 @@ const initialMessage: Message = {
 };
 
 const AIChat = () => {
-  // ✅ Replace your old messages state with this
   const [messages, setMessages] = useState<Message[]>([initialMessage]);
-
   const [isTyping, setIsTyping] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -33,7 +31,8 @@ const AIChat = () => {
     });
   }, [messages, isTyping]);
 
-  const handleSendMessage = (text: string) => {
+  const handleSendMessage = async (text: string) => {
+    // Add user message
     setMessages((prev) => [
       ...prev,
       {
@@ -44,21 +43,36 @@ const AIChat = () => {
 
     setIsTyping(true);
 
-    setTimeout(() => {
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/chat",
+        {
+          message: text,
+        }
+      );
+
       setMessages((prev) => [
         ...prev,
         {
           sender: "ai",
-          message:
-            "This is a demo response. Soon I'll answer using AI and your college database. 🤖",
+          message: response.data.answer,
         },
       ]);
+    } catch (error) {
+      console.error(error);
 
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "ai",
+          message: "❌ Unable to connect to the backend.",
+        },
+      ]);
+    } finally {
       setIsTyping(false);
-    }, 2000);
+    }
   };
 
-  // ✅ Add this
   const handleClearChat = () => {
     setMessages([initialMessage]);
     setIsTyping(false);
@@ -68,7 +82,6 @@ const AIChat = () => {
     <AppLayout>
       <div className="max-w-5xl mx-auto h-[85vh] flex flex-col bg-white rounded-xl shadow">
 
-        {/* ✅ Replace ChatHeader */}
         <ChatHeader onClearChat={handleClearChat} />
 
         <div className="flex-1 overflow-y-auto p-6">

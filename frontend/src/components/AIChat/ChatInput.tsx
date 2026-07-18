@@ -1,13 +1,17 @@
 import { Send } from "lucide-react";
 import { useState } from "react";
 
-const ChatInput = () => {
+interface ChatInputProps {
+  onSendMessage: (message: string) => void;
+}
+
+const ChatInput = ({ onSendMessage }: ChatInputProps) => {
   const [message, setMessage] = useState("");
 
   const handleSend = () => {
     if (!message.trim()) return;
 
-    console.log(message); // We'll replace this with AI later
+    onSendMessage(message);
     setMessage("");
   };
 
@@ -27,7 +31,7 @@ const ChatInput = () => {
 
         <button
           onClick={handleSend}
-          className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg transition"
+          className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg"
         >
           <Send size={20} />
         </button>

@@ -1,6 +1,8 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
+from services.ai_service import get_ai_response
+
 router = APIRouter()
 
 
@@ -10,6 +12,8 @@ class ChatRequest(BaseModel):
 
 @router.post("/chat")
 def chat(request: ChatRequest):
-    return {
-        "answer": f"You asked: {request.message}"
-    }
+    try:
+        answer = get_ai_response(request.message)
+        return {"answer": answer}
+    except Exception as e:
+        return {"answer": f"Error: {str(e)}"}
